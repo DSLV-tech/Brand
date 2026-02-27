@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSLV.tech — Brand Identity System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================================
+     DESIGN TOKENS
+  ============================================================ */
+  :root {
+    /* Brand Palette */
+    --ink:        #0E0E12;   /* Near-black, base */
+    --obsidian:   #1A1A22;   /* Dark surface */
+    --slate:      #2C2C3A;   /* Mid surface */
+    --smoke:      #6B6B80;   /* Muted text */
+    --paper:      #F4F1EA;   /* Warm off-white */
+    --white:      #FDFCFA;
+
+    --ember:      #E8521A;   /* Primary accent — burnt orange */
+    --ember-deep: #BF3E0E;   /* Darker ember */
+    --ember-glow: #F47B4A;   /* Lighter ember */
+
+    --signal:     #D4FF00;   /* Electric lime — secondary accent (web only) */
+
+    /* Typography */
+    --font-display: 'Syne', sans-serif;
+    --font-mono:    'DM Mono', monospace;
+    --font-body:    'DM Sans', sans-serif;
+
+    /* Spacing */
+    --gap: 2px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  svg { max-width: 100%; }
+  html { font-size: 16px; }
+  body {
+    font-family: var(--font-body);
+    background: var(--paper);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ============================================================
+     LAYOUT SYSTEM
+  ============================================================ */
+  .brand-doc {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .section {
+    padding: 100px 64px;
+    border-bottom: 1px solid rgba(14,14,18,0.08);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-meta {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 64px;
+  }
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 0.7rem; font-weight: 300;
+    color: var(--ember); letter-spacing: 0.1em;
+  }
+  .section-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, rgba(14,14,18,0.12), transparent);
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--smoke);
+  }
+
+  h2.display {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.92;
+    margin-bottom: 24px;
+  }
+  .caption {
+    font-size: 0.85rem; color: var(--smoke);
+    font-weight: 300; letter-spacing: 0.02em;
+  }
+
+  /* ============================================================
+     COVER
+  ============================================================ */
+  .cover {
+    background: var(--ink);
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Background texture */
+  .cover::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 85%, rgba(232,82,26,0.12) 0%, transparent 50%),
+      radial-gradient(circle at 85% 20%, rgba(232,82,26,0.06) 0%, transparent 40%);
+  }
+
+  /* Fine grid */
+  .cover::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(244,241,234,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(244,241,234,0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .cover-content {
+    position: relative; z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .cover-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem; font-weight: 300;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 64px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .cover-label::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--ember);
+  }
+
+  /* THE LOGO — SVG inline */
+  .logo-hero {
+    margin-bottom: 80px;
+  }
+
+  .cover-tagline {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    font-weight: 800;
+    color: var(--paper);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .cover-tagline span {
+    -webkit-text-stroke: 1.5px rgba(244,241,234,0.35);
+    color: transparent;
+  }
+
+  .cover-sub {
+    font-size: 0.9rem; font-weight: 300;
+    color: rgba(244,241,234,0.35);
+    letter-spacing: 0.05em;
+    font-family: var(--font-mono);
+  }
+
+  .cover-footer {
+    position: relative; z-index: 2;
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .cover-footer-left {
+    font-family: var(--font-mono);
+    font-size: 0.7rem; font-weight: 300;
+    color: rgba(244,241,234,0.2);
+    letter-spacing: 0.08em;
+  }
+  .cover-footer-right {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: rgba(244,241,234,0.2);
+    letter-spacing: 0.05em;
+  }
+
+  /* ============================================================
+     LOGO SECTION
+  ============================================================ */
+  .logo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap);
+  }
+  .logo-panel {
+    padding: 64px 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    min-height: 340px;
+    position: relative;
+  }
+  .logo-panel.dark { background: var(--ink); }
+  .logo-panel.light { background: var(--paper); border: 1px solid rgba(14,14,18,0.08); }
+  .logo-panel.ember { background: var(--ember); }
+  .logo-panel.obsidian { background: var(--obsidian); }
+
+  .panel-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    align-self: flex-end;
+  }
+  .logo-panel.dark .panel-label,
+  .logo-panel.obsidian .panel-label { color: rgba(244,241,234,0.25); }
+  .logo-panel.light .panel-label { color: rgba(14,14,18,0.3); }
+  .logo-panel.ember .panel-label { color: rgba(14,14,18,0.4); }
+
+  /* ============================================================
+     LOGO ANATOMY
+  ============================================================ */
+  .anatomy-section {
+    background: var(--white);
+    padding: 80px 64px;
+    border-bottom: 1px solid rgba(14,14,18,0.08);
+  }
+  .anatomy-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .anatomy-visual {
+    position: relative;
+    padding: 64px;
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Anatomy annotation lines */
+  .anno-line {
+    position: absolute;
+    background: rgba(232,82,26,0.3);
+  }
+  .anno-line.h { height: 1px; }
+  .anno-line.v { width: 1px; }
+  .anno-dot {
+    position: absolute;
+    width: 5px; height: 5px;
+    background: var(--ember);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .anno-text {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 0.6rem; font-weight: 300;
+    color: var(--ember); letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .anatomy-notes { padding-top: 8px; }
+  .anatomy-notes h3 {
+    font-family: var(--font-display);
+    font-size: 1.8rem; font-weight: 800;
+    letter-spacing: -0.03em; margin-bottom: 32px;
+  }
+  .anatomy-item {
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(14,14,18,0.08);
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .anatomy-item:last-child { border-bottom: none; }
+  .anat-key {
+    font-family: var(--font-mono);
+    font-size: 0.65rem; font-weight: 500;
+    color: var(--ember); letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding-top: 2px;
+  }
+  .anat-val { font-size: 0.85rem; line-height: 1.6; color: var(--smoke); font-weight: 300; }
+  .anat-val strong { color: var(--ink); font-weight: 500; }
+
+  /* ============================================================
+     COLOR PALETTE
+  ============================================================ */
+  .palette-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--gap);
+  }
+  .color-swatch {
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    align-items: center;
+    height: 64px;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .color-swatch:hover { transform: translateX(4px); }
+  .swatch-block {
+    height: 100%;
+    width: 72px;
+  }
+  .swatch-info {
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    background: rgba(244,241,234,0.04);
+    height: 100%;
+  }
+  .swatch-name {
+    font-family: var(--font-display);
+    font-weight: 700; font-size: 0.9rem;
+    letter-spacing: -0.01em;
+    color: var(--paper);
+  }
+  .swatch-role {
+    font-family: var(--font-mono);
+    font-size: 0.6rem; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(244,241,234,0.45);
+  }
+  .swatch-hex {
+    font-family: var(--font-mono);
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--paper);
+    padding: 0 20px;
+    background: rgba(244,241,234,0.04);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-left: 1px solid rgba(244,241,234,0.06);
+  }
+
+  /* ============================================================
+     TYPOGRAPHY
+  ============================================================ */
+  .type-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+  .type-panel {
+    padding: 48px;
+    background: var(--white);
+    border: 1px solid rgba(14,14,18,0.06);
+  }
+  .type-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--smoke);
+    margin-bottom: 32px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .type-label::before {
+    content: '';
+    width: 20px; height: 1px;
+    background: var(--ember);
+  }
+
+  .type-specimen-display {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+
+  .type-specimen-mono {
+    font-family: var(--font-mono);
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+
+  .type-weights {
+    display: flex; flex-direction: column; gap: 12px;
+    margin-top: 24px;
+    border-top: 1px solid rgba(14,14,18,0.08);
+    padding-top: 24px;
+  }
+  .type-weight-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 16px;
+  }
+  .type-weight-sample {
+    font-family: var(--font-display);
+    font-size: 1.2rem; letter-spacing: -0.02em;
+  }
+  .tw-meta {
+    font-family: var(--font-mono);
+    font-size: 0.65rem; color: var(--smoke); letter-spacing: 0.05em;
+  }
+
+  .type-scale {
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .scale-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 16px; align-items: baseline;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(14,14,18,0.06);
+  }
+  .scale-row:last-child { border-bottom: none; }
+  .scale-meta {
+    font-family: var(--font-mono);
+    font-size: 0.6rem; color: var(--smoke);
+    letter-spacing: 0.06em; line-height: 1.5;
+  }
+
+  /* ============================================================
+     SPACING & GRID
+  ============================================================ */
+  .spacing-row {
+    display: flex; gap: 0; align-items: flex-end;
+    margin-bottom: 40px;
+  }
+  .space-block {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-end;
+  }
+  .space-visual {
+    background: var(--ember);
+    width: 100%;
+    opacity: 0.15;
+    margin-bottom: 8px;
+  }
+  .space-block:nth-child(1) .space-visual { opacity: 0.08; }
+  .space-block:nth-child(2) .space-visual { opacity: 0.12; }
+  .space-block:nth-child(3) .space-visual { opacity: 0.16; }
+  .space-block:nth-child(4) .space-visual { opacity: 0.22; }
+  .space-block:nth-child(5) .space-visual { opacity: 0.3; }
+  .space-block:nth-child(6) .space-visual { opacity: 0.4; }
+  .space-block:nth-child(7) .space-visual { opacity: 0.55; }
+  .space-block:nth-child(8) .space-visual { opacity: 0.75; }
+  .space-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem; color: var(--smoke);
+    letter-spacing: 0.06em; text-align: center;
+  }
+
+  /* ============================================================
+     CLEAR SPACE & LOGO DON'TS
+  ============================================================ */
+  .donts-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--gap);
+  }
+  .dont-card {
+    padding: 40px 24px 24px;
+    background: var(--white);
+    border: 1px solid rgba(14,14,18,0.06);
+    text-align: center;
+    position: relative;
+  }
+  .dont-badge {
+    position: absolute; top: 12px; right: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.6rem; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #c0392b; background: rgba(192,57,43,0.1);
+    padding: 3px 8px;
+  }
+  .dont-visual {
+    margin-bottom: 20px;
+    display: flex; align-items: center; justify-content: center;
+    height: 80px;
+  }
+  .dont-rule {
+    font-size: 0.75rem; line-height: 1.5;
+    color: var(--smoke); font-weight: 300;
+  }
+
+  /* ============================================================
+     MOCKUPS / APPLICATIONS
+  ============================================================ */
+  .mockup-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap);
+  }
+  .mockup-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+  }
+  .mockup-card.dark-bg { background: var(--ink); }
+  .mockup-card.ember-bg { background: var(--ember); }
+  .mockup-card.paper-bg { background: var(--paper); border: 1px solid rgba(14,14,18,0.06); }
+  .mockup-card.slate-bg { background: var(--slate); }
+
+  /* Business Card mockup */
+  .biz-card {
+    width: 320px;
+    background: var(--ink);
+    padding: 28px 32px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  .biz-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--ember), var(--ember-glow));
+  }
+  .biz-card-top {
+    display: flex; justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+  }
+  .biz-name {
+    font-family: var(--font-display);
+    font-size: 0.85rem; font-weight: 700;
+    color: var(--paper); line-height: 1.2;
+  }
+  .biz-role {
+    font-family: var(--font-mono);
+    font-size: 0.6rem; font-weight: 300;
+    color: rgba(244,241,234,0.35);
+    letter-spacing: 0.06em;
+    margin-top: 3px;
+  }
+  .biz-contact {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .biz-contact span {
+    font-family: var(--font-mono);
+    font-size: 0.6rem; font-weight: 300;
+    color: rgba(244,241,234,0.3);
+    letter-spacing: 0.04em;
+    text-align: right;
+  }
+  .biz-contact span.highlight {
+    color: var(--ember); opacity: 1;
+  }
+
+  /* Email signature mockup */
+  .email-sig {
+    width: 340px;
+    background: var(--white);
+    padding: 24px 28px;
+    border-left: 3px solid var(--ember);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.15);
+  }
+  .sig-name {
+    font-family: var(--font-display);
+    font-size: 1rem; font-weight: 800;
+    color: var(--ink); letter-spacing: -0.02em;
+    margin-bottom: 2px;
+  }
+  .sig-role {
+    font-family: var(--font-mono);
+    font-size: 0.65rem; font-weight: 300;
+    color: var(--ember); letter-spacing: 0.06em;
+    margin-bottom: 16px;
+  }
+  .sig-divider {
+    height: 1px; background: rgba(14,14,18,0.08);
+    margin-bottom: 16px;
+  }
+  .sig-links { display: flex; flex-direction: column; gap: 4px; }
+  .sig-links span {
+    font-family: var(--font-mono);
+    font-size: 0.65rem; font-weight: 300;
+    color: var(--smoke); letter-spacing: 0.04em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .sig-links span::before {
+    content: '//';
+    color: var(--ember);
+    font-weight: 500;
+  }
+
+  /* Favicon mockup */
+  .favicon-row {
+    display: flex; gap: 24px; align-items: center; flex-wrap: wrap;
+    justify-content: center;
+  }
+  .fav-item {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .fav-icon {
+    display: flex; align-items: center; justify-content: center;
+    background: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 800; color: var(--ember);
+    letter-spacing: -0.04em;
+  }
+  .fav-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem; color: rgba(244,241,234,0.3);
+    letter-spacing: 0.06em;
+  }
+
+  /* Social avatar */
+  .social-avatar {
+    width: 88px; height: 88px;
+    background: var(--ink);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 0 3px var(--ember), 0 12px 32px rgba(0,0,0,0.4);
+  }
+
+  /* ============================================================
+     VOICE & TONE
+  ============================================================ */
+  .voice-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-bottom: 48px;
+  }
+  .voice-card {
+    padding: 40px 32px;
+    background: var(--white);
+    border: 1px solid rgba(14,14,18,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .voice-card::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: var(--ember);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+  .voice-card:hover::before { transform: scaleX(1); }
+  .voice-icon {
+    font-size: 2rem; margin-bottom: 16px;
+  }
+  .voice-name {
+    font-family: var(--font-display);
+    font-size: 1.2rem; font-weight: 800;
+    letter-spacing: -0.02em; margin-bottom: 8px;
+  }
+  .voice-desc {
+    font-size: 0.85rem; line-height: 1.6;
+    color: var(--smoke); font-weight: 300;
+  }
+
+  .copy-examples {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+  .copy-ex {
+    padding: 32px;
+  }
+  .copy-ex.yes-ex { background: rgba(232,82,26,0.05); border: 1px solid rgba(232,82,26,0.15); }
+  .copy-ex.no-ex { background: rgba(14,14,18,0.03); border: 1px solid rgba(14,14,18,0.06); }
+  .copy-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 16px; display: block;
+  }
+  .copy-ex.yes-ex .copy-tag { color: var(--ember); }
+  .copy-ex.no-ex .copy-tag { color: var(--smoke); }
+  .copy-text {
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 700;
+    letter-spacing: -0.01em; line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .copy-reason {
+    font-family: var(--font-mono);
+    font-size: 0.7rem; font-weight: 300;
+    color: var(--smoke); letter-spacing: 0.02em;
+  }
+  .copy-ex.no-ex .copy-text { opacity: 0.4; text-decoration: line-through; }
+
+  /* ============================================================
+     ICON SYSTEM PREVIEW
+  ============================================================ */
+  .icon-strip {
+    display: flex; gap: 32px; flex-wrap: wrap; align-items: center;
+    padding: 48px;
+    background: var(--ink);
+  }
+  .icon-item {
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .icon-box {
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(244,241,234,0.1);
+  }
+  .icon-item-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem; color: rgba(244,241,234,0.25);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  /* ============================================================
+     DECORATIVE / PATTERN
+  ============================================================ */
+  .pattern-section {
+    padding: 0;
+    overflow: hidden;
+  }
+  .pattern-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 400px;
+  }
+  .pattern-left {
+    background: var(--obsidian);
+    padding: 64px;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+  }
+  .pattern-right {
+    background: var(--ember);
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pattern-right::before {
+    content: '// DS //\A// DS //\A// DS //\A// DS //\A// DS //\A// DS //';
+    white-space: pre;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: rgba(14,14,18,0.15);
+    line-height: 1.15;
+    text-align: center;
+  }
+  .pattern-text-overlay {
+    position: absolute;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 4rem);
+    font-weight: 800;
+    color: rgba(14,14,18,0.08);
+    letter-spacing: -0.03em;
+    user-select: none;
+  }
+
+  /* ============================================================
+     LAST PAGE — SUMMARY
+  ============================================================ */
+  .summary {
+    background: var(--ink);
+    padding: 100px 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .summary-left {}
+  .summary-tokens {
+    display: flex; flex-direction: column; gap: 0;
+    margin-top: 48px;
+  }
+  .token-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 20px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(244,241,234,0.06);
+  }
+  .token-key {
+    font-family: var(--font-mono);
+    font-size: 0.65rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ember);
+  }
+  .token-val {
+    font-family: var(--font-mono);
+    font-size: 0.75rem; color: rgba(244,241,234,0.5);
+    letter-spacing: 0.04em;
+  }
+  .summary-right {
+    display: flex; flex-direction: column;
+    align-items: flex-start; gap: 32px;
+  }
+  .summary-tagline {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 800;
+    color: var(--paper);
+    letter-spacing: -0.04em; line-height: 0.95;
+  }
+  .summary-tagline em {
+    font-style: normal;
+    -webkit-text-stroke: 1.5px var(--ember);
+    color: transparent;
+  }
+  .summary-note {
+    font-family: var(--font-mono);
+    font-size: 0.8rem; font-weight: 300;
+    color: rgba(244,241,234,0.3);
+    line-height: 1.6; letter-spacing: 0.02em;
+  }
+  .url-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 1px solid rgba(244,241,234,0.12);
+    padding: 10px 20px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem; color: var(--paper);
+    letter-spacing: 0.05em;
+  }
+  .url-badge span { color: var(--ember); }
+
+  /* ============================================================
+     UTILITY
+  ============================================================ */
+  .label-sm {
+    font-family: var(--font-mono);
+    font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--smoke); margin-bottom: 12px; display: block;
+  }
+  .mt-8 { margin-top: 8px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-24 { margin-top: 24px; }
+  .mt-40 { margin-top: 40px; }
+  .flex { display: flex; }
+  .gap-16 { gap: 16px; }
+  .items-center { align-items: center; }
+
+  /* ============================================================
+     RESPONSIVE
+  ============================================================ */
+
+  /* ── Tablet landscape (900px–1100px) ──
+     Mantiene 2 colonne dove possibile, riduce padding */
+  @media (max-width: 1100px) {
+    .section { padding: 80px 40px; }
+    .anatomy-section { padding: 80px 40px; }
+    .cover { padding: 56px 40px; }
+    .summary { padding: 80px 40px; }
+    .processo-strip { padding: 64px 40px !important; }
+    h2.display { font-size: clamp(2rem, 3.5vw, 4rem); }
+  }
+
+  /* ── Tablet portrait (600px–900px) ──
+     2 colonne bilanciate, testo leggibile, nessun collasso forzato */
+  @media (max-width: 900px) {
+    /* Spacing */
+    .section { padding: 64px 28px; }
+    .anatomy-section { padding: 64px 28px; }
+    .cover { padding: 48px 28px; }
+    .summary { grid-template-columns: 1fr; gap: 48px; padding: 72px 28px; }
+    .cover-footer { flex-direction: column; gap: 8px; align-items: flex-start; }
+
+    /* Logo: 2 colonne (dark+light sopra, ember+mono sotto) */
+    .logo-grid { grid-template-columns: 1fr 1fr; }
+    .logo-panel { min-height: 240px; padding: 40px 28px; }
+    .logo-panel svg { max-width: 100%; height: auto; }
+
+    /* Symbol row: 3 → 3 (ok, è più piccolo) */
+    .symbol-row > div { min-height: 160px; }
+
+    /* Anatomy: visual sopra, note sotto */
+    .anatomy-inner { grid-template-columns: 1fr; gap: 40px; }
+    .anatomy-visual { padding: 48px 32px; }
+
+    /* Type: 2 pannelli affiancati → rimangono 2 col, ma padding ridotto */
+    .type-grid { grid-template-columns: 1fr 1fr; }
+    .type-panel { padding: 36px 28px; }
+    .type-specimen-display { font-size: clamp(2rem, 4vw, 4rem); }
+
+    /* Mockup: 1 per riga (contenuto ricco, meglio largo) */
+    .mockup-grid { grid-template-columns: 1fr; }
+
+    /* Copy examples: 2 col su tablet */
+    .copy-examples { grid-template-columns: 1fr 1fr; }
+
+    /* Don'ts: 2 col */
+    .donts-grid { grid-template-columns: 1fr 1fr; }
+
+    /* Voice: 1 col */
+    .voice-grid { grid-template-columns: 1fr; }
+
+    /* Team: featured grande + 2 piccole affiancate */
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .team-card.featured { grid-column: 1 / -1; }
+
+    /* Pattern */
+    .pattern-inner { grid-template-columns: 1fr; }
+    .pattern-right { min-height: 220px; }
+
+    /* Processo: etichetta sopra, 4 step in 2x2 */
+    .processo-strip {
+      padding: 64px 28px !important;
+      grid-template-columns: 1fr !important;
+      gap: 40px !important;
+    }
+    .processo-steps { grid-template-columns: 1fr 1fr !important; gap: 24px !important; }
+    .processo-label { font-size: clamp(1.6rem, 3vw, 2.5rem) !important; }
+
+    /* Ember shades: 3 → 1 col su tablet stretto */
+    .ember-shades { grid-template-columns: 1fr 1fr 1fr !important; }
+
+    /* Headings */
+    h2.display { font-size: clamp(2rem, 4vw, 3.5rem); }
+
+    /* Cover */
+    .cover-tagline { font-size: clamp(1.4rem, 3vw, 2rem); }
+    .logo-hero svg { max-width: 85%; height: auto; }
+
+    /* Footer */
+    .summary-tagline { font-size: clamp(1.8rem, 4vw, 3rem); }
+  }
+
+  /* ── Mobile (< 480px) ──
+     Single column, minimal padding, essenziale ma leggibile */
+  @media (max-width: 480px) {
+    /* Spacing */
+    .section { padding: 48px 16px; }
+    .anatomy-section { padding: 48px 16px; }
+    h2.display { font-size: 1.9rem; }
+    .section-meta { margin-bottom: 28px; }
+
+    /* Cover */
+    .cover { padding: 80px 16px 32px; min-height: auto; }
+    .cover-label { font-size: 0.6rem; margin-bottom: 28px; }
+    .cover-tagline { font-size: 1.3rem; }
+    .cover-sub { font-size: 0.7rem; }
+    .logo-hero { margin-bottom: 40px; }
+    .logo-hero svg { max-width: 100%; height: auto; }
+
+    /* Logo panels: 1 col */
+    .logo-grid { grid-template-columns: 1fr !important; }
+    .logo-panel { padding: 28px 20px; min-height: 180px; }
+    .logo-panel svg { max-width: 100%; height: auto; }
+    .symbol-row { grid-template-columns: 1fr !important; }
+    .symbol-row > div { min-height: 140px !important; }
+
+    /* Anatomy */
+    .anatomy-visual { padding: 28px 16px; }
+    .anatomy-visual svg { max-width: 100%; height: auto; }
+    .anatomy-notes h3 { font-size: 1.2rem; }
+    .anatomy-item { grid-template-columns: 60px 1fr; gap: 10px; padding: 14px 0; }
+    .anat-key { font-size: 0.6rem; }
+    .anat-val { font-size: 0.8rem; }
+
+    /* Palette */
+    .color-swatch { height: 52px; }
+    .swatch-block { width: 52px; }
+    .swatch-name { font-size: 0.8rem; }
+    .swatch-role { display: none; }
+    .swatch-hex { font-size: 0.68rem; padding: 0 12px; }
+    .ember-shades { grid-template-columns: 1fr !important; }
+    .shade-row { grid-template-columns: 48px 1fr !important; height: 44px !important; }
+
+    /* Typography */
+    .type-grid { grid-template-columns: 1fr !important; }
+    .type-panel { padding: 28px 16px; }
+    .type-specimen-display { font-size: 2rem; }
+    .type-specimen-mono { font-size: 1.1rem; }
+    .type-weight-sample { font-size: 1rem; }
+    .tw-meta { font-size: 0.6rem; }
+    .scale-row { grid-template-columns: 52px 1fr; gap: 8px; }
+    .scale-meta { font-size: 0.55rem; }
+
+    /* Don'ts */
+    .donts-grid { grid-template-columns: 1fr !important; }
+    .dont-card { padding: 28px 16px 18px; }
+    .dont-visual { height: 64px; }
+
+    /* Voice & copy */
+    .voice-grid { grid-template-columns: 1fr !important; }
+    .voice-card { padding: 24px 16px; }
+    .copy-examples { grid-template-columns: 1fr !important; }
+    .copy-ex { padding: 20px 14px; }
+    .copy-text { font-size: 0.9rem; }
+
+    /* Team */
+    .team-grid { grid-template-columns: 1fr !important; }
+    .team-card.featured { grid-column: auto !important; }
+    .team-card { padding: 28px 20px; }
+
+    /* Mockups */
+    .mockup-grid { grid-template-columns: 1fr !important; }
+    .mockup-card { padding: 28px 16px; min-height: 240px; }
+    .biz-card { width: 100%; max-width: 280px; }
+    .email-sig { width: 100%; max-width: 280px; }
+    .favicon-row { gap: 12px; flex-wrap: wrap; justify-content: flex-start; }
+
+    /* Processo */
+    .processo-strip { padding: 48px 16px !important; grid-template-columns: 1fr !important; gap: 32px !important; }
+    .processo-steps { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
+    .processo-label { font-size: 1.5rem !important; }
+    .step-n { font-size: 1.4rem; }
+    .step-name { font-size: 0.85rem; }
+    .step-desc { font-size: 0.75rem; }
+
+    /* Pattern */
+    .pattern-left { padding: 36px 16px; }
+    .pattern-right { min-height: 180px; }
+
+    /* Summary */
+    .summary { padding: 48px 16px !important; }
+    .summary-tagline { font-size: 1.8rem; }
+    .token-row { grid-template-columns: 76px 1fr; gap: 8px; padding: 10px 0; }
+    .token-key { font-size: 0.55rem; }
+    .token-val { font-size: 0.62rem; }
+
+    /* Brand doc footer */
+    .brand-doc > div:last-child {
+      padding: 20px 16px !important;
+      flex-direction: column !important;
+      gap: 4px !important;
+      align-items: flex-start !important;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="brand-doc">
+
+<!-- ================================================================
+  COVER
+================================================================ -->
+<div class="cover">
+  <div class="cover-content">
+    <div class="cover-label">Brand Identity System — v1.0 — 2025</div>
+
+    <!-- MAIN LOGO SVG -->
+    <div class="logo-hero">
+      <svg width="360.0" height="108" viewBox="0 0 360.0 108" overflow="visible" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="DSLV.tech logo">
+        <rect x="0" y="12" width="14" height="64" fill="#E8521A" transform="skewX(-12)"/>
+        <rect x="22" y="12" width="14" height="64" fill="#E8521A" transform="skewX(-12)"/>
+        <text x="58" y="72" font-family="Syne, sans-serif" font-weight="800" font-size="68" fill="#F4F1EA" letter-spacing="-3">DSLV</text>
+        <text x="62" y="96" font-family="Syne, sans-serif" font-weight="500" font-size="20" fill="rgba(244,241,234,0.4)" letter-spacing="0.14em">.tech</text>
+      </svg>
+    </div>
+
+    <div class="cover-tagline">
+      Colmiamo il <span>gap</span> digitale.<br>Un progetto alla volta.
+    </div>
+    <div class="cover-sub">// brand.identity.system — dslv.tech</div>
+  </div>
+  <div class="cover-footer">
+    <div class="cover-footer-left">
+      Riservato — Digital Solving · 2025<br>
+      Questo documento definisce l'identità visiva ufficiale di DSLV.tech
+    </div>
+    <div class="cover-footer-right">01 / 08</div>
+  </div>
+</div>
+
+<!-- ================================================================
+  02 — LOGO SYSTEM
+================================================================ -->
+<div class="section">
+  <div class="section-meta">
+    <span class="section-num">02</span>
+    <span class="section-title">Logo System</span>
+    <div class="section-line"></div>
+  </div>
+
+  <h2 class="display">Il logo</h2>
+  <p style="max-width:560px; font-size:1rem; line-height:1.7; color:var(--smoke); font-weight:300; margin-bottom:64px;">
+    Il simbolo <strong style="color:var(--ink); font-weight:500;">//</strong> (doppio slash) è il cuore del logo. Nel codice, <code style="font-family:var(--font-mono); font-size:0.9em; color:var(--ember);">//</code> introduce un commento: il pensiero dietro la soluzione. Visivamente è dinamico, diagonale, riconoscibile — comunica velocità e precisione tecnica.
+  </p>
+
+  <div class="logo-grid">
+    <!-- Dark background (primary) -->
+    <div class="logo-panel dark">
+      <span class="panel-label">Primario — fondo scuro</span>
+      <svg width="300.0" height="90" viewBox="0 0 300.0 90" overflow="visible" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="8" width="10" height="48" fill="#E8521A" transform="skewX(-12)"/>
+        <rect x="16" y="8" width="10" height="48" fill="#E8521A" transform="skewX(-12)"/>
+        <text x="38" y="56" font-family="Syne, sans-serif" font-weight="800" font-size="52" fill="#F4F1EA" letter-spacing="-2.5">DSLV</text>
+        <text x="42" y="76" font-family="Syne, sans-serif" font-weight="500" font-size="15" fill="rgba(244,241,234,0.4)" letter-spacing="0.14em">.tech</text>
+      </svg>
+    </div>
+
+    <!-- Light background -->
+    <div class="logo-panel light">
+      <span class="panel-label">Secondario — fondo chiaro</span>
+      <svg width="300.0" height="90" viewBox="0 0 300.0 90" overflow="visible" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="8" width="10" height="48" fill="#E8521A" transform="skewX(-12)"/>
+        <rect x="16" y="8" width="10" height="48" fill="#E8521A" transform="skewX(-12)"/>
+        <text x="38" y="56" font-family="Syne, sans-serif" font-weight="800" font-size="52" fill="#0E0E12" letter-spacing="-2.5">DSLV</text>
+        <text x="42" y="76" font-family="Syne, sans-serif" font-weight="500" font-size="15" fill="rgba(14,14,18,0.35)" letter-spacing="0.14em">.tech</text>
+      </svg>
+    </div>
+
+    <!-- Ember background (accent use) -->
+    <div class="logo-panel ember">
+      <span class="panel-label">Accento — fondo ember</span>
+      <svg width="300.0" height="90" viewBox="0 0 300.0 90" overflow="visible" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="8" width="10" height="48" fill="rgba(14,14,18,0.55)" transform="skewX(-12)"/>
+        <rect x="16" y="8" width="10" height="48" fill="rgba(14,14,18,0.55)" transform="skewX(-12)"/>
+        <text x="38" y="56" font-family="Syne, sans-serif" font-weight="800" font-size="52" fill="#0E0E12" letter-spacing="-2.5">DSLV</text>
+        <text x="42" y="76" font-family="Syne, sans-serif" font-weight="500" font-size="15" fill="rgba(14,14,18,0.4)" letter-spacing="0.14em">.tech</text>
+      </svg>
+    </div>
+
+    <!-- Monochrome / stamp -->
+    <div class="logo-panel obsidian">
+      <span class="panel-label">Monocromatico</span>
+      <svg width="300.0" height="90" viewBox="0 0 300.0 90" overflow="visible" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="8" width="10" height="48" fill="#F4F1EA" transform="skewX(-12)"/>
+        <rect x="16" y="8" width="10" height="48" fill="#F4F1EA" transform="skewX(-12)"/>
+        <text x="38" y="56" font-family="Syne, sans-serif" font-weight="800" font-size="52" fill="#F4F1EA" letter-spacing="-2.5">DSLV</text>
+        <text x="42" y="76" font-family="Syne, sans-serif" font-weight="500" font-size="15" fill="rgba(244,241,234,0.35)" letter-spacing="0.14em">.tech</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Symbol only -->
+  <div class="symbol-row" style="margin-top: 2px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px;">
+    <div class="logo-panel dark" style="min-height: 200px; align-items: center; justify-content: center; display: flex;">
+      <div>
+        <span class="panel-label" style="text-align:center; display:block; margin-bottom:32px;">Simbolo isolato — dark</span>
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="16" height="56" fill="#E8521A" transform="skewX(-10)"/>
+          <rect x="34" y="8" width="16" height="56" fill="#E8521A" transform="skewX(-10)"/>
+        </svg>
+      </div>
+    </div>
+    <div class="logo-panel light" style="min-height: 200px; align-items: center; justify-content: center; display: flex;">
+      <div>
+        <span class="panel-label" style="text-align:center; display:block; margin-bottom:32px;">Simbolo isolato — light</span>
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="16" height="56" fill="#E8521A" transform="skewX(-10)"/>
+          <rect x="34" y="8" width="16" height="56" fill="#E8521A" transform="skewX(-10)"/>
+        </svg>
+      </div>
+    </div>
+    <div class="logo-panel ember" style="min-height: 200px; align-items: center; justify-content: center; display: flex;">
+      <div>
+        <span class="panel-label" style="text-align:center; display:block; margin-bottom:32px;">Simbolo isolato — ember</span>
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="16" height="56" fill="rgba(14,14,18,0.55)" transform="skewX(-10)"/>
+          <rect x="34" y="8" width="16" height="56" fill="rgba(14,14,18,0.55)" transform="skewX(-10)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+  03 — ANATOMY
+================================================================ -->
+<div class="anatomy-section">
+  <div class="section-meta">
+    <span class="section-num">03</span>
+    <span class="section-title">Anatomia del Logo</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="anatomy-inner">
+    <div class="anatomy-visual">
+      <svg width="300.0" height="96" viewBox="0 0 300.0 96" overflow="visible" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="8" width="10" height="50" fill="#E8521A" transform="skewX(-12)"/>
+        <rect x="16" y="8" width="10" height="50" fill="#E8521A" transform="skewX(-12)"/>
+        <text x="38" y="56" font-family="Syne, sans-serif" font-weight="800" font-size="52" fill="#0E0E12" letter-spacing="-2.5">DSLV</text>
+        <text x="42" y="80" font-family="Syne, sans-serif" font-weight="500" font-size="16" fill="rgba(14,14,18,0.35)" letter-spacing="0.14em">.tech</text>
+        <!-- annotation lines -->
+        <line x1="5" y1="0" x2="5" y2="8" stroke="#E8521A" stroke-width="0.5" opacity="0.5"/>
+        <line x1="0" y1="8" x2="40" y2="8" stroke="#E8521A" stroke-width="0.5" opacity="0.3" stroke-dasharray="2,2"/>
+        <line x1="40" y1="0" x2="200" y2="0" stroke="rgba(14,14,18,0.2)" stroke-width="0.5" stroke-dasharray="2,2"/>
+        <line x1="200" y1="0" x2="300" y2="0" stroke="rgba(14,14,18,0.1)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      </svg>
+    </div>
+
+    <div class="anatomy-notes">
+      <h3>Come è costruito</h3>
+      <div class="anatomy-item">
+        <div class="anat-key">Simbolo</div>
+        <div class="anat-val">Doppio slash <strong>//</strong> inclinato a –12° con geometria rettangolare. Rimanda alla sintassi dei commenti nel codice. È l'unico elemento colorato in ember.</div>
+      </div>
+      <div class="anatomy-item">
+        <div class="anat-key">Wordmark</div>
+        <div class="anat-val">Acronimo <strong>DSLV</strong> in Syne 800, kerning –2.5px. Peso massimo per impatto visivo e leggibilità anche a piccole dimensioni.</div>
+      </div>
+      <div class="anatomy-item">
+        <div class="anat-key">Separatore</div>
+        <div class="anat-val">Punto circolare in ember <strong>·</strong> come giuntura tra acronimo e dominio. Allineato alla x-height — l'unico elemento cromatico nel blocco testuale.</div>
+      </div>
+      <div class="anatomy-item">
+        <div class="anat-key">Dominio</div>
+        <div class="anat-val"><strong>.tech</strong> in Syne 800 — stesso peso e stesso colore di DSLV. Non è un'appendice: è parte integrante del nome. Logo e URL coincidono perfettamente.</div>
+      </div>
+      <div class="anatomy-item">
+        <div class="anat-key">Clear space</div>
+        <div class="anat-val">Margine minimo uguale all'altezza del simbolo // su tutti i lati. Non comprimere, non tagliare.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+  04 — PALETTE
+================================================================ -->
+<div class="section" style="background: var(--ink);">
+  <div class="section-meta">
+    <span class="section-num" style="color:var(--ember)">04</span>
+    <span class="section-title" style="color:rgba(244,241,234,0.3)">Palette Colori</span>
+    <div class="section-line" style="background: linear-gradient(90deg, rgba(244,241,234,0.1), transparent);"></div>
+  </div>
+
+  <h2 class="display" style="color:var(--paper)">Colori del<br>brand</h2>
+  <p style="font-size:0.9rem; color:rgba(244,241,234,0.35); font-weight:300; margin-bottom:48px; max-width:480px; line-height:1.7; font-family:var(--font-mono);">
+    // Una palette costruita sulla tensione tra profondità e calore.<br>
+    // Inchiostro + brace + carta — tech con calore umano.
+  </p>
+
+  <div class="palette-grid">
+
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:var(--ember);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Ember</div>
+        <div class="swatch-role">Primario — accento</div>
+      </div>
+      <div class="swatch-hex">#E8521A</div>
+    </div>
+
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:var(--ink);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Ink</div>
+        <div class="swatch-role">Base — fondo principale</div>
+      </div>
+      <div class="swatch-hex">#0E0E12</div>
+    </div>
+
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:var(--paper); outline: 1px solid rgba(244,241,234,0.08);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name" style="color:rgba(244,241,234,0.9);">Paper</div>
+        <div class="swatch-role">Superficie chiara</div>
+      </div>
+      <div class="swatch-hex">#F4F1EA</div>
+    </div>
+
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:var(--obsidian);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Obsidian</div>
+        <div class="swatch-role">Dark UI — pannelli</div>
+      </div>
+      <div class="swatch-hex">#1A1A22</div>
+    </div>
+
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:var(--smoke);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Smoke</div>
+        <div class="swatch-role">Testo secondario</div>
+      </div>
+      <div class="swatch-hex">#6B6B80</div>
+    </div>
+
+  </div>
+
+  <!-- Ember shades -->
+  <div class="ember-shades" style="margin-top:2px; display:grid; grid-template-columns:repeat(3,1fr); gap:2px;">
+    <div class="shade-row" style="display:grid; grid-template-columns:72px 1fr; height:48px; overflow:hidden;">
+      <div style="background:var(--ember-deep); height:100%;"></div>
+      <div style="background:rgba(244,241,234,0.04); display:flex; align-items:center; padding:0 20px; border-left:1px solid rgba(244,241,234,0.06);">
+        <div>
+          <div style="font-family:var(--font-display); font-weight:700; font-size:0.8rem; color:var(--paper); letter-spacing:-0.01em;">Ember Deep</div>
+          <div style="font-family:var(--font-mono); font-size:0.6rem; color:rgba(244,241,234,0.45); letter-spacing:0.06em; margin-top:2px;">#BF3E0E</div>
+        </div>
+      </div>
+    </div>
+    <div class="shade-row" style="display:grid; grid-template-columns:72px 1fr; height:48px; overflow:hidden;">
+      <div style="background:var(--ember); height:100%;"></div>
+      <div style="background:rgba(244,241,234,0.04); display:flex; align-items:center; justify-content:space-between; padding:0 20px; border-left:1px solid rgba(244,241,234,0.06);">
+        <div>
+          <div style="font-family:var(--font-display); font-weight:700; font-size:0.8rem; color:var(--paper); letter-spacing:-0.01em;">Ember <span style="color:var(--ember); font-size:0.6rem; letter-spacing:0.08em;">MAIN</span></div>
+          <div style="font-family:var(--font-mono); font-size:0.6rem; color:rgba(244,241,234,0.45); letter-spacing:0.06em; margin-top:2px;">#E8521A</div>
+        </div>
+      </div>
+    </div>
+    <div class="shade-row" style="display:grid; grid-template-columns:72px 1fr; height:48px; overflow:hidden;">
+      <div style="background:var(--ember-glow); height:100%;"></div>
+      <div style="background:rgba(244,241,234,0.04); display:flex; align-items:center; padding:0 20px; border-left:1px solid rgba(244,241,234,0.06);">
+        <div>
+          <div style="font-family:var(--font-display); font-weight:700; font-size:0.8rem; color:var(--paper); letter-spacing:-0.01em;">Ember Glow</div>
+          <div style="font-family:var(--font-mono); font-size:0.6rem; color:rgba(244,241,234,0.45); letter-spacing:0.06em; margin-top:2px;">#F47B4A</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+  05 — TYPOGRAPHY
+================================================================ -->
+<div class="section">
+  <div class="section-meta">
+    <span class="section-num">05</span>
+    <span class="section-title">Tipografia</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="type-grid">
+    <!-- Display font -->
+    <div class="type-panel">
+      <div class="type-label">Display / UI — Syne</div>
+      <div class="type-specimen-display">Risolviamo.<br><span style="-webkit-text-stroke:2px var(--ink); color:transparent;">Cresciamo.</span></div>
+      <div class="type-weights">
+        <div class="type-weight-row">
+          <div class="type-weight-sample" style="font-weight:800;">Digital Solving</div>
+          <span class="tw-meta">Syne 800 — Headline</span>
+        </div>
+        <div class="type-weight-row">
+          <div class="type-weight-sample" style="font-weight:700;">Digital Solving</div>
+          <span class="tw-meta">Syne 700 — Subheading</span>
+        </div>
+        <div class="type-weight-row">
+          <div class="type-weight-sample" style="font-weight:600;">Digital Solving</div>
+          <span class="tw-meta">Syne 600 — Label</span>
+        </div>
+        <div class="type-weight-row">
+          <div class="type-weight-sample" style="font-weight:400;">Digital Solving</div>
+          <span class="tw-meta">Syne 400 — Accent text</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mono font -->
+    <div class="type-panel">
+      <div class="type-label">Tecnico / Dati — DM Mono</div>
+      <div class="type-specimen-mono">// problem<br>→ solution</div>
+
+      <div class="type-scale">
+        <div class="scale-row">
+          <div class="scale-meta">56px / 800<br>Syne</div>
+          <div style="font-family:var(--font-display); font-size:2.2rem; font-weight:800; letter-spacing:-0.04em; line-height:1;">Colmiamo il gap</div>
+        </div>
+        <div class="scale-row">
+          <div class="scale-meta">32px / 800<br>Syne</div>
+          <div style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; letter-spacing:-0.03em;">Web App & E-commerce</div>
+        </div>
+        <div class="scale-row">
+          <div class="scale-meta">16px / 300<br>DM Sans</div>
+          <div style="font-family:var(--font-body); font-size:1rem; font-weight:300; line-height:1.6; color:var(--smoke);">Tecnologia accessibile per le piccole imprese italiane che vogliono crescere online.</div>
+        </div>
+        <div class="scale-row">
+          <div class="scale-meta">12px / 400<br>DM Mono</div>
+          <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--ember); letter-spacing:0.1em;">// BRAND IDENTITY — V1.0 — 2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+  06 — APPLICATIONS / MOCKUPS
+================================================================ -->
+<div class="section" style="background:var(--obsidian);">
+  <div class="section-meta">
+    <span class="section-num" style="color:var(--ember)">06</span>
+    <span class="section-title" style="color:rgba(244,241,234,0.3)">Applicazioni</span>
+    <div class="section-line" style="background: linear-gradient(90deg, rgba(244,241,234,0.08), transparent);"></div>
+  </div>
+
+  <h2 class="display" style="color:var(--paper)">Il brand<br>in azione</h2>
+
+  <div class="mockup-grid" style="margin-top:48px;">
+
+    <!-- Business Card -->
+    <div class="mockup-card dark-bg">
+      <div style="display:flex; flex-direction:column; gap:16px; align-items:center;">
+        <!-- Front -->
+        <div class="biz-card">
+          <div class="biz-card-top">
+            <div>
+              <div class="biz-name">Marco Rossi</div>
+              <div class="biz-role">Lead Developer & Founder</div>
+            </div>
+            <div class="biz-contact">
+              <span class="highlight"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="18707d747477587c6b746e366c7d7b70">[email&#160;protected]</a></span>
+              <span>dslv.tech</span>
+              <span>+39 000 000 0000</span>
+            </div>
+          </div>
+          <!-- Logo on card -->
+          <svg width="170.0" height="52" viewBox="0 0 170.0 52" overflow="visible" fill="none">
+            <rect x="0" y="2" width="6" height="28" fill="#E8521A" transform="skewX(-12)"/>
+            <rect x="10" y="2" width="6" height="28" fill="#E8521A" transform="skewX(-12)"/>
+            <text x="22" y="30" font-family="Syne, sans-serif" font-weight="800" font-size="28" fill="#F4F1EA" letter-spacing="-1.2">DSLV</text>
+            <text x="25" y="46" font-family="Syne, sans-serif" font-weight="500" font-size="10" fill="rgba(244,241,234,0.4)" letter-spacing="0.14em">.tech</text>
+          </svg>
+        </div>
+        <!-- Back -->
+        <div class="biz-card" style="background:var(--ember);">
+          <div style="display:flex; align-items:center; justify-content:center; height:100%; padding:16px 0;">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+              <rect x="8" y="8" width="18" height="64" fill="rgba(14,14,18,0.4)" transform="skewX(-10)"/>
+              <rect x="36" y="8" width="18" height="64" fill="rgba(14,14,18,0.4)" transform="skewX(-10)"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div style="position:absolute; bottom:24px; left:24px; font-family:var(--font-mono); font-size:0.6rem; color:rgba(244,241,234,0.2);">Biglietto da visita — 85 × 55mm</div>
+    </div>
+
+    <!-- Email Signature + Favicon -->
+    <div class="mockup-card paper-bg" style="flex-direction:column; gap:40px; align-items:flex-start;">
+      <div>
+        <div class="label-sm">Firma email</div>
+        <div class="email-sig">
+          <div class="sig-name">DSLV.tech</div>
+          <div class="sig-role">// Digital Solving Agency</div>
+          <div class="sig-divider"></div>
+          <div class="sig-links">
+            <span>dslv.tech</span>
+            <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="761e131a1a193612051a00580213151e">[email&#160;protected]</a></span>
+            <span>+39 000 000 0000</span>
+            <span>Vercelli, Italia</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="label-sm">Favicon & avatar</div>
+        <div class="favicon-row">
+          <div class="fav-item">
+            <div class="fav-icon" style="width:64px; height:64px; font-size:0.8rem; border-radius:12px;">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                <rect x="3" y="3" width="10" height="34" fill="#E8521A" transform="skewX(-8)"/>
+                <rect x="20" y="3" width="10" height="34" fill="#E8521A" transform="skewX(-8)"/>
+              </svg>
+            </div>
+            <span class="fav-label" style="color:var(--smoke);">64px</span>
+          </div>
+          <div class="fav-item">
+            <div class="fav-icon" style="width:48px; height:48px; font-size:0.7rem; border-radius:8px;">
+              <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+                <rect x="3" y="3" width="10" height="34" fill="#E8521A" transform="skewX(-8)"/>
+                <rect x="20" y="3" width="10" height="34" fill="#E8521A" transform="skewX(-8)"/>
+              </svg>
+            </div>
+            <span class="fav-label" style="color:var(--smoke);">48px</span>
+          </div>
+          <div class="fav-item">
+            <div class="fav-icon" style="width:32px; height:32px; font-size:0.55rem; border-radius:4px;">
+              <svg width="18" height="18" viewBox="0 0 40 40" fill="none">
+                <rect x="3" y="3" width="10" height="34" fill="#E8521A" transform="skewX(-8)"/>
+                <rect x="20" y="3" width="10" height="34" fill="#E8521A" transform="skewX(-8)"/>
+              </svg>
+            </div>
+            <span class="fav-label" style="color:var(--smoke);">32px</span>
+          </div>
+          <div class="fav-item">
+            <div class="social-avatar">
+              <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+                <rect x="4" y="4" width="12" height="36" fill="#E8521A" transform="skewX(-9)"/>
+                <rect x="24" y="4" width="12" height="36" fill="#E8521A" transform="skewX(-9)"/>
+              </svg>
+            </div>
+            <span class="fav-label" style="color:var(--smoke);">Social</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OG Image mockup -->
+    <div class="mockup-card dark-bg" style="padding:0; align-items:stretch; justify-content:stretch;">
+      <div style="
+        width:100%; background:var(--ink);
+        display:flex; flex-direction:column; justify-content:space-between;
+        padding:40px;
+        background-image: radial-gradient(circle at 80% 20%, rgba(232,82,26,0.10) 0%, transparent 55%);
+        position:relative; overflow:hidden;
+      ">
+        <!-- Label -->
+        <div style="font-family:var(--font-mono); font-size:0.65rem; color:rgba(244,241,234,0.18); letter-spacing:0.08em;">// og:image — 1200×630</div>
+
+        <!-- Main copy — occupa il centro -->
+        <div style="padding-right: 120px;">
+          <div style="font-family:var(--font-display); font-weight:800; font-size:clamp(1.4rem,2.5vw,2rem); color:var(--paper); letter-spacing:-0.03em; line-height:1.05; margin-bottom:12px;">Colmiamo il gap<br>digitale.</div>
+          <div style="font-family:var(--font-mono); font-size:0.68rem; color:rgba(244,241,234,0.25); letter-spacing:0.06em;">dslv.tech — Digital Solving Agency</div>
+        </div>
+
+        <!-- Logo stacked in basso a destra — separato e autonomo -->
+        <div style="position:absolute; bottom:28px; right:32px; display:flex; flex-direction:column; align-items:flex-end; gap:0;">
+          <svg width="90" height="56" viewBox="0 0 170 56" overflow="visible" fill="none">
+            <!-- slashes -->
+            <rect x="0" y="4" width="8" height="36" fill="#E8521A" transform="skewX(-12)"/>
+            <rect x="14" y="4" width="8" height="36" fill="#E8521A" transform="skewX(-12)"/>
+            <!-- DSLV -->
+            <text x="30" y="38" font-family="Syne, sans-serif" font-weight="800" font-size="38" fill="#F4F1EA" letter-spacing="-1.8">DSLV</text>
+            <!-- .tech subline -->
+            <text x="34" y="52" font-family="Syne, sans-serif" font-weight="500" font-size="11" fill="rgba(244,241,234,0.35)" letter-spacing="0.1em">.tech</text>
+          </svg>
+        </div>
+
+        <!-- Linea ember decorativa in basso -->
+        <div style="position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--ember), transparent);"></div>
+      </div>
+    </div>
+
+    <!-- Sticker / stamp -->
+    <div class="mockup-card" style="background:#F0EDE4; justify-content:center; gap:32px; flex-wrap:wrap;">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:16px;">
+        <div class="label-sm" style="color:var(--smoke)">Sticker quadrato</div>
+        <div style="
+          width:160px; height:160px;
+          background:var(--ember);
+          display:flex; align-items:center; justify-content:center;
+          flex-direction:column; gap:8px;
+          box-shadow: 6px 6px 0 rgba(14,14,18,0.2);
+        ">
+          <svg width="56" height="56" viewBox="0 0 72 72" fill="none">
+            <rect x="8" y="8" width="16" height="56" fill="rgba(14,14,18,0.5)" transform="skewX(-10)"/>
+            <rect x="34" y="8" width="16" height="56" fill="rgba(14,14,18,0.5)" transform="skewX(-10)"/>
+          </svg>
+          <div style="font-family:var(--font-display); font-weight:800; font-size:0.9rem; color:rgba(14,14,18,0.7); letter-spacing:0.04em;">DSLV.tech</div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:16px;">
+        <div class="label-sm" style="color:var(--smoke)">Badge circolare</div>
+        <div style="
+          width:140px; height:140px;
+          background:var(--ink);
+          border-radius:50%;
+          display:flex; align-items:center; justify-content:center;
+          flex-direction:column; gap:4px;
+          box-shadow: 0 0 0 6px var(--ember), 0 8px 24px rgba(0,0,0,0.2);
+        ">
+          <svg width="40" height="40" viewBox="0 0 72 72" fill="none">
+            <rect x="8" y="8" width="16" height="56" fill="#E8521A" transform="skewX(-10)"/>
+            <rect x="34" y="8" width="16" height="56" fill="#E8521A" transform="skewX(-10)"/>
+          </svg>
+          <div style="font-family:var(--font-display); font-weight:800; font-size:0.65rem; color:rgba(244,241,234,0.5); letter-spacing:0.08em; text-transform:uppercase;">Digital</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+  07 — LOGO DONTS
+================================================================ -->
+<div class="section">
+  <div class="section-meta">
+    <span class="section-num">07</span>
+    <span class="section-title">Regole d'uso — Don'ts</span>
+    <div class="section-line"></div>
+  </div>
+
+  <h2 class="display">Cosa non fare</h2>
+  <p style="font-size:0.9rem; color:var(--smoke); font-weight:300; margin-bottom:48px; line-height:1.7;">Queste regole proteggono la coerenza e la riconoscibilità del brand.</p>
+
+  <div class="donts-grid">
+    <div class="dont-card">
+      <span class="dont-badge">✗ NO</span>
+      <div class="dont-visual">
+        <svg width="180" height="44" viewBox="0 0 180 44" fill="none" style="filter: blur(2px) saturate(0); opacity:0.4;">
+          <rect x="0" y="6" width="7" height="32" fill="#E8521A" transform="skewX(-12)"/>
+          <rect x="12" y="6" width="7" height="32" fill="#E8521A" transform="skewX(-12)"/>
+          <text x="26" y="34" font-family="Syne, sans-serif" font-weight="800" font-size="32" fill="#0E0E12" letter-spacing="-1">DSLV.tech</text>
+        </svg>
+      </div>
+      <div class="dont-rule">Non usare su sfondi a basso contrasto o sfocati</div>
+    </div>
+
+    <div class="dont-card">
+      <span class="dont-badge">✗ NO</span>
+      <div class="dont-visual">
+        <svg width="180" height="44" viewBox="0 0 180 44" fill="none" style="transform: skewX(15deg);">
+          <rect x="0" y="6" width="7" height="32" fill="#9B59B6" transform="skewX(-12)"/>
+          <rect x="12" y="6" width="7" height="32" fill="#9B59B6" transform="skewX(-12)"/>
+          <text x="26" y="34" font-family="Syne, sans-serif" font-weight="800" font-size="32" fill="#0E0E12" letter-spacing="-1">DSLV.tech</text>
+        </svg>
+      </div>
+      <div class="dont-rule">Non alterare i colori del simbolo // — sempre ember</div>
+    </div>
+
+    <div class="dont-card">
+      <span class="dont-badge">✗ NO</span>
+      <div class="dont-visual">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <svg width="30" height="30" viewBox="0 0 72 72" fill="none">
+            <rect x="8" y="8" width="16" height="56" fill="#E8521A" transform="skewX(-10)"/>
+            <rect x="34" y="8" width="16" height="56" fill="#E8521A" transform="skewX(-10)"/>
+          </svg>
+          <div style="font-family:Arial, sans-serif; font-weight:900; font-size:1.4rem; color:#0E0E12; letter-spacing:-1px;">DSLV.tech</div>
+        </div>
+      </div>
+      <div class="dont-rule">Non sostituire Syne con altri font — mai Arial, Roboto, Inter</div>
+    </div>
+
+    <div class="dont-card">
+      <span class="dont-badge">✗ NO</span>
+      <div class="dont-visual">
+        <svg width="180" height="44" viewBox="0 0 180 44" fill="none" style="transform: scaleX(0.6) scaleY(1.4); transform-origin: left center;">
+          <rect x="0" y="6" width="7" height="32" fill="#E8521A" transform="skewX(-12)"/>
+          <rect x="12" y="6" width="7" height="32" fill="#E8521A" transform="skewX(-12)"/>
+          <text x="26" y="34" font-family="Syne, sans-serif" font-weight="800" font-size="32" fill="#0E0E12" letter-spacing="-1">DSLV.tech</text>
+        </svg>
+      </div>
+      <div class="dont-rule">Non distorcere le proporzioni — mai stretching orizzontale o verticale</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+  PATTERN SECTION — decorative
+================================================================ -->
+<div class="pattern-section">
+  <div class="pattern-inner">
+    <div class="pattern-left">
+      <div style="font-family:var(--font-mono); font-size:0.65rem; color:rgba(244,241,234,0.2); letter-spacing:0.12em; text-transform:uppercase;">Elemento decorativo</div>
+      <div>
+        <div style="font-family:var(--font-display); font-size:2rem; font-weight:800; color:var(--paper); line-height:1; margin-bottom:16px;">Pattern<br>brand</div>
+        <div style="font-family:var(--font-mono); font-size:0.75rem; color:rgba(244,241,234,0.3); line-height:1.7;">
+          Il simbolo // ripetuto crea un pattern tessile coerente. Usabile come sfondo in presentazioni, intestazioni di documenti, pattern su merchandise.
+        </div>
+      </div>
+    </div>
+    <div class="pattern-right">
+      <!-- Pattern generated purely in CSS/content -->
+      <div style="
+        position:absolute; inset:0;
+        display:grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        padding:16px; gap:8px;
+        opacity:0.18;
+      ">
+        <!-- 24 slash pairs -->
+        <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+          // generate via JS after load
+        </script>
+      </div>
+      <!-- Large // overlay -->
+      <div style="
+        font-family:var(--font-display);
+        font-weight:800;
+        font-size:10rem;
+        color:rgba(14,14,18,0.2);
+        letter-spacing:-0.05em;
+        user-select:none;
+        line-height:1;
+      ">//</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+  VOICE & TONE
+================================================================ -->
+<div class="section">
+  <div class="section-meta">
+    <span class="section-num">08</span>
+    <span class="section-title">Voce & Tono</span>
+    <div class="section-line"></div>
+  </div>
+
+  <h2 class="display">Come<br>parliamo</h2>
+  <p style="font-size:0.9rem; color:var(--smoke); font-weight:300; margin:24px 0 48px; max-width:520px; line-height:1.7;">Il brand parla come un esperto di fiducia: diretto, concreto, senza gergo inutile. Non vendiamo sogni — risolviamo problemi reali.</p>
+
+  <div class="voice-grid">
+    <div class="voice-card">
+      <div class="voice-icon">⚡</div>
+      <div class="voice-name">Diretto</div>
+      <div class="voice-desc">Andiamo subito al punto. Niente fronzoli, niente promesse vaghe. Diciamo cosa facciamo, come lo facciamo, quanto costa.</div>
+    </div>
+    <div class="voice-card">
+      <div class="voice-icon">🤝</div>
+      <div class="voice-name">Umano</div>
+      <div class="voice-desc">Siamo tecnici, ma parliamo con le persone — non con le aziende. Usiamo un linguaggio accessibile anche con chi non è del settore.</div>
+    </div>
+    <div class="voice-card">
+      <div class="voice-icon">🎯</div>
+      <div class="voice-name">Concreto</div>
+      <div class="voice-desc">I numeri valgono più degli aggettivi. "Il tuo sito ha convertito il 3,2% in più" è meglio di "abbiamo migliorato la performance."</div>
+    </div>
+  </div>
+
+  <div class="copy-examples" style="margin-top:2px;">
+    <div class="copy-ex yes-ex">
+      <span class="copy-tag">✓ Sì — voce DSLV</span>
+      <div class="copy-text">"Progettiamo la tua web app in 4 settimane. Poi la consegniamo, la testiamo insieme, e siamo ancora qui se qualcosa non va."</div>
+      <div class="copy-reason">// Specifico, onesto, orientato alla relazione post-vendita</div>
+    </div>
+    <div class="copy-ex no-ex">
+      <span class="copy-tag">✗ No — troppo generico</span>
+      <div class="copy-text">"Siamo un'agenzia digitale innovativa che offre soluzioni all'avanguardia per le aziende del futuro."</div>
+      <div class="copy-reason">// Vuoto, non dice nulla, potrebbe essere chiunque</div>
+    </div>
+    <div class="copy-ex yes-ex">
+      <span class="copy-tag">✓ Sì — headline DSLV</span>
+      <div class="copy-text">"Il tuo sito attuale ti sta costando clienti. Sistemalo."</div>
+      <div class="copy-reason">// Urgenza reale, problem-solving diretto</div>
+    </div>
+    <div class="copy-ex no-ex">
+      <span class="copy-tag">✗ No — too corporate</span>
+      <div class="copy-text">"Trasforma il tuo business digitale con le nostre premium solutions."</div>
+      <div class="copy-reason">// "Premium solutions" è meaningless. Evitare anglicismi vuoti.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+  SUMMARY / BRAND TOKENS
+================================================================ -->
+<div class="summary">
+  <div class="summary-left">
+    <div style="font-family:var(--font-mono); font-size:0.65rem; color:var(--ember); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:40px;">// brand.tokens</div>
+    <div class="summary-tokens">
+      <div class="token-row">
+        <span class="token-key">Nome</span>
+        <span class="token-val">Digital Solving — DSLV.tech</span>
+      </div>
+      <div class="token-row">
+        <span class="token-key">Logo</span>
+        <span class="token-val">// DSLV · .tech — tutto Syne 800</span>
+      </div>
+      <div class="token-row">
+        <span class="token-key">Primario</span>
+        <span class="token-val">#E8521A — Ember</span>
+      </div>
+      <div class="token-row">
+        <span class="token-key">Base</span>
+        <span class="token-val">#0E0E12 — Ink</span>
+      </div>
+      <div class="token-row">
+        <span class="token-key">Surface</span>
+        <span class="token-val">#F4F1EA — Paper</span>
+      </div>
+      <div class="token-row">
+        <span class="token-key">Display</span>
+        <span class="token-val">Syne 800 / 700 / 600 / 400</span>
+      </div>
+      <div class="token-row">
+        <span class="token-key">Mono</span>
+        <span class="token-val">DM Mono 300 / 400 / 500</span>
+      </div>
+      <div class="token-row">
+        <span class="token-key">Body</span>
+        <span class="token-val">DM Sans 300 / 400 / 500</span>
+      </div>
+      <div class="token-row">
+        <span class="token-key">Target</span>
+        <span class="token-val">PMI italiane — gap digitale</span>
+      </div>
+      <div class="token-row">
+        <span class="token-key">Tono</span>
+        <span class="token-val">Diretto · Umano · Concreto</span>
+      </div>
+      <div class="token-row">
+        <span class="token-key">Tagline</span>
+        <span class="token-val">Colmiamo il gap digitale.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary-right">
+    <!-- Final logo big -->
+    <svg width="100%" viewBox="0 0 320.0 108" overflow="visible" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:320px;">
+      <rect x="0" y="12" width="14" height="64" fill="#E8521A" transform="skewX(-12)"/>
+      <rect x="22" y="12" width="14" height="64" fill="#E8521A" transform="skewX(-12)"/>
+      <text x="58" y="72" font-family="Syne, sans-serif" font-weight="800" font-size="68" fill="#F4F1EA" letter-spacing="-3">DSLV</text>
+      <text x="62" y="96" font-family="Syne, sans-serif" font-weight="500" font-size="20" fill="rgba(244,241,234,0.4)" letter-spacing="0.14em">.tech</text>
+    </svg>
+
+    <div class="summary-tagline">
+      Colmiamo<br>il <em>gap</em><br>digitale.
+    </div>
+
+    <div class="summary-note">
+      // Un brand costruito sulla chiarezza.<br>
+      // Il simbolo // racconta chi siamo:<br>
+      // quelli che pensano la soluzione<br>
+      // prima di scrivere il codice.
+    </div>
+
+    <div class="url-badge">
+      <span>//</span> dslv.tech
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="background:var(--ink); padding:24px 64px; display:flex; justify-content:space-between; align-items:center; border-top: 1px solid rgba(244,241,234,0.05);">
+  <div style="font-family:var(--font-mono); font
